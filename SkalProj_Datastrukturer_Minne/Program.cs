@@ -216,12 +216,14 @@ class Program
          * Create a switch with cases to push or pop items
          * Make sure to look at the stack after pushing and and poping to see how it behaves
         */
-        Queue<string> nameQueue = new Queue<string>();
+        Stack<string> nameQueue = new Stack<string>();
         bool isRunning = true;
         do
         {
-            Console.WriteLine("1. Add customer to queue.\n" +
+            Console.WriteLine("***STACK***\n" +
+                              "1. Add customer to queue.\n" +
                               "2. Handle customer.\n" +
+                              "3. Reverse text.\n" +
                               "0. Back to menu.");
             string input = Console.ReadLine();
             switch (input)
@@ -229,14 +231,14 @@ class Program
                 case "1":
                     Console.Write("Name: ");
                     string name = Console.ReadLine();
-                    nameQueue.Enqueue(name);
+                    nameQueue.Push(name);
                     Console.WriteLine($"{name} ställer sig i kön.");
                     break;
                 case "2":
                     try
                     {
                         Console.WriteLine($"{nameQueue.Peek()} blir expedierad och lämnar kön.");
-                        nameQueue.Dequeue();
+                        nameQueue.Pop();
                         break;
                     }
                     catch (InvalidOperationException)
@@ -244,6 +246,9 @@ class Program
                         Console.WriteLine("Kön är tom.");
                         break;
                     }
+                case "3":
+                    ReverseText();
+                    break;
                 case "0":
                     isRunning = false;
                     break;
@@ -251,8 +256,27 @@ class Program
                     Console.WriteLine("Wrong input.");
                     break;
             }
+            // Det blir dumt att använda Stack för att hantera en kö eftersom den är LIFO,
+            // last in first out. alltså den som står sist i kön får gå före de som väntat
+            // längst. Vilket är lite orättvist. 
 
         } while (isRunning);
+    }
+
+    private static void ReverseText()
+    {
+        Stack<char> chStack = new Stack<char>();
+        Console.WriteLine("write a text you want to reverse.");
+        string str = Console.ReadLine();
+        foreach (var c in str)
+        {
+            chStack.Push(c);
+        }
+        while (chStack.Count != 0)
+        {
+            Console.Write(chStack.Pop());
+        }
+        Console.ReadKey();
     }
 
     static void CheckParanthesis()
