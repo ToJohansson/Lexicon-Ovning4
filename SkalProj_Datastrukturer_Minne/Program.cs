@@ -42,9 +42,6 @@ class Program
     /// <param name="args"></param>
     static void Main()
     {
-        CheckParanthesis();
-        return;
-
         while (true)
         {
             Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
@@ -297,10 +294,16 @@ class Program
             med motsvarande öppnande parentes som value. 
             Tanken är att lägga till alla öppnande parenteser från user input till stack och sedan gör metod Pop()
             och se om värdet från pop är detsamma som värdet ur vår sträng där index är i Dict pattern, 
-            om ja sätt true, else sätt false.
+            default true, else sätt false om det inte finns rätt match.
          */
+        Console.WriteLine("Method to check if the paranthesis in a string is correct or incorrect.\n" +
+                          "Example of correct: (()), {}, [({})] \n" +
+                          "Example of incorrect: (()]), [), {[()}]\n" +
+                          "\n" +
+                          "Please add your string and check if it is correct or incorrect.");
         bool isMatch = true;
-        string input = "List<int> list = new List<int>() {{ 1, 2, 3, 4 }}";
+        //string input = "List<int> list = new List<int>() {{ 1, 2, 3, 4 }}";
+        string input = Console.ReadLine();
         Stack<char> chars = new Stack<char>();
         Dictionary<char, char> patternPairs = new Dictionary<char, char>
         {
@@ -331,10 +334,9 @@ class Program
             isMatch = false;
         }
 
-        Console.WriteLine($"{isMatch} Din input är {(isMatch ? "välformad" : "ej välformad")}.");
-
-
-
+        Console.WriteLine($"Din input: {input}" +
+                          $"\nDin input är {(isMatch ? "välformad" : "ej välformad")}.");
+        Console.ReadKey();
     }
 
 }
