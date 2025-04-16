@@ -301,45 +301,50 @@ class Program
                           "Example of correct: (()), {}, [({})] \n" +
                           "Example of incorrect: (()]), [), {[()}]\n" +
                           "Please add your string and check if it is correct or incorrect.");
-        bool isMatch = true;
-        bool hasParanthesis = false;
+
         string input = Console.ReadLine();
-        Stack<char> chars = new Stack<char>();
-        Dictionary<char, char> patternPairs = new Dictionary<char, char>
-        {
-            { ')', '(' },
-            { '}', '{' },
-            { ']', '[' }
-        };
 
-        for (int i = 0; i < input.Length; i++)
-        {
-            if (input[i] == '(' || input[i] == '{' || input[i] == '[')
-            {
-                hasParanthesis = true;
-                chars.Push(input[i]);
-            }
+        bool isMatch = CheckParanthesisLogic(input);
 
-            if (input[i] == ')' || input[i] == '}' || input[i] == ']')
+        Console.WriteLine($"\nDin input: {input}");
+        Console.WriteLine($"Din input är {(isMatch ? "välformad" : "ej välformad")}.");
+        Console.ReadKey();
+    }
+    private static bool CheckParanthesisLogic(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return false;
+
+        var Pattern = new Dictionary<char, char>
+    {
+        { ')', '(' },
+        { '}', '{' },
+        { ']', '[' }
+    };
+
+        var charStack = new Stack<char>();
+        bool BracketsFlag = false;
+
+        //loopa igenom varje char från input 
+        foreach (char c in input)
+        {
+            // om char är av öppnande parantes
+            if (Pattern.ContainsValue(c))
             {
-                if (chars.Count == 0 || patternPairs[input[i]] != chars.Pop())
+                BracketsFlag = true;
+                charStack.Push(c);
+            } // om char är stängande parantes
+            else if (Pattern.ContainsKey(c))
+            {
+                BracketsFlag = true;
+
+                if (charStack.Count == 0 || charStack.Pop() != Pattern[c])
                 {
-                    hasParanthesis = true;
-                    isMatch = false;
-                    break;
+                    return false;
                 }
             }
-
-        }
-        if (chars.Count > 0 || !hasParanthesis)
-        {
-            isMatch = false;
         }
 
-        Console.WriteLine("Count " + chars.Count + $" match  {isMatch}");
-        Console.WriteLine($"Din input: {input}" +
-                          $"\nDin input är {(isMatch ? "välformad" : "ej välformad")}.");
-        Console.ReadKey();
+        return BracketsFlag && charStack.Count == 0;
     }
 
 }
