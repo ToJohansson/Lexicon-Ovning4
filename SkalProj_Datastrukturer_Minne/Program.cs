@@ -1,6 +1,8 @@
 ﻿using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Drawing;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace SkalProj_Datastrukturer_Minne;
 
@@ -40,6 +42,8 @@ class Program
     /// <param name="args"></param>
     static void Main()
     {
+        CheckParanthesis();
+        return;
 
         while (true)
         {
@@ -287,7 +291,52 @@ class Program
          * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
          */
 
+        /*
+            Jag har valt att använda både en Stack av char och en Dictionary av char, char som key value.
+            Min dict är mönstret där jag vill hitta rätt matchning. Alltså stängade parentes som key och 
+            med motsvarande öppnande parentes som value. 
+            Tanken är att lägga till alla öppnande parenteser från user input till stack och sedan gör metod Pop()
+            och se om värdet från pop är detsamma som värdet ur vår sträng där index är i Dict pattern, 
+            om ja sätt true, else sätt false.
+         */
+        bool isMatch = true;
+        string input = "List<int> list = new List<int>() {{ 1, 2, 3, 4 }}";
+        Stack<char> chars = new Stack<char>();
+        Dictionary<char, char> patternPairs = new Dictionary<char, char>
+        {
+            { ')', '(' },
+            { '}', '{' },
+            { ']', '[' }
+        };
+
+        for (int i = 0; i < input.Length; i++)
+        {
+
+            if (input[i] == '(' || input[i] == '{' || input[i] == '[')
+            {
+                chars.Push(input[i]);
+            }
+            if (input[i] == ')' || input[i] == '}' || input[i] == ']')
+            {
+                if (chars.Count == 0 || patternPairs[input[i]] != chars.Pop())
+                {
+                    isMatch = false;
+                    break;
+                }
+
+            }
+        }
+        if (chars.Count > 0)
+        {
+            isMatch = false;
+        }
+
+        Console.WriteLine($"{isMatch} Din input är {(isMatch ? "välformad" : "ej välformad")}.");
+
+
+
     }
 
 }
+
 
