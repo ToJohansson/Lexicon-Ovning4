@@ -296,13 +296,13 @@ class Program
             och se om värdet från pop är detsamma som värdet ur vår sträng där index är i Dict pattern, 
             default true, else sätt false om det inte finns rätt match.
          */
-        Console.WriteLine("Method to check if the paranthesis in a string is correct or incorrect.\n" +
+        Console.WriteLine("\n" +
+                          "Method to check if the paranthesis in a string is correct or incorrect.\n" +
                           "Example of correct: (()), {}, [({})] \n" +
                           "Example of incorrect: (()]), [), {[()}]\n" +
-                          "\n" +
                           "Please add your string and check if it is correct or incorrect.");
         bool isMatch = true;
-        //string input = "List<int> list = new List<int>() {{ 1, 2, 3, 4 }}";
+        bool hasParanthesis = false;
         string input = Console.ReadLine();
         Stack<char> chars = new Stack<char>();
         Dictionary<char, char> patternPairs = new Dictionary<char, char>
@@ -314,26 +314,29 @@ class Program
 
         for (int i = 0; i < input.Length; i++)
         {
-
             if (input[i] == '(' || input[i] == '{' || input[i] == '[')
             {
+                hasParanthesis = true;
                 chars.Push(input[i]);
             }
+
             if (input[i] == ')' || input[i] == '}' || input[i] == ']')
             {
                 if (chars.Count == 0 || patternPairs[input[i]] != chars.Pop())
                 {
+                    hasParanthesis = true;
                     isMatch = false;
                     break;
                 }
-
             }
+
         }
-        if (chars.Count > 0)
+        if (chars.Count > 0 || !hasParanthesis)
         {
             isMatch = false;
         }
 
+        Console.WriteLine("Count " + chars.Count + $" match  {isMatch}");
         Console.WriteLine($"Din input: {input}" +
                           $"\nDin input är {(isMatch ? "välformad" : "ej välformad")}.");
         Console.ReadKey();
