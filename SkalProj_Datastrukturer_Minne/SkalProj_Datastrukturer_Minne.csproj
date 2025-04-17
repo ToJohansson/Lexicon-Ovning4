@@ -7,4 +7,12 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <None Remove="Images\PsudoParanthesis.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Images\PsudoParanthesis.png" />
+	</ItemGroup>
+
 </Project>

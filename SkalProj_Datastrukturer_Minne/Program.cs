@@ -337,13 +337,16 @@ class Program
             {
                 BracketsFlag = true;
 
+                // false ifall vi aldrig lagt till nåt i stack
+                // false ifall pop inte matchar i pattern.
                 if (charStack.Count == 0 || charStack.Pop() != Pattern[c])
                 {
                     return false;
                 }
             }
         }
-
+        // returnerna både ifall vi hittat parenteser och att stack måste
+        // ha gått jämnt ut på 0, då är det true och bara då.
         return BracketsFlag && charStack.Count == 0;
     }
 
