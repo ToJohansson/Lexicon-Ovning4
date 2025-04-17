@@ -42,6 +42,7 @@ class Program
     /// <param name="args"></param>
     static void Main()
     {
+
         while (true)
         {
             Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
@@ -49,6 +50,7 @@ class Program
                 + "\n2. Examine a Queue"
                 + "\n3. Examine a Stack"
                 + "\n4. CheckParenthesis"
+                + "\n5. Recursive"
                 + "\n0. Exit the application");
             char input = ' '; //Creates the character input to be used with the switch-case below.
             try
@@ -74,10 +76,13 @@ class Program
                 case '4':
                     CheckParanthesis();
                     break;
+                case '5':
+                    Recursive();
+                    break;
                 /*
-                 * Extend the menu to include the recursive 
-                 * and iterative exercises.
-                 */
+             * Extend the menu to include the recursive 
+             * and iterative exercises.
+             */
                 case '0':
                     Environment.Exit(0);
                     break;
@@ -88,6 +93,57 @@ class Program
         }
     }
 
+    static void Recursive()
+    {
+        /*
+            1. Illustrera förloppen för RecursiveOdd(1), RecursiveOdd(3) och RecursiveOdd(5) på papper för att förstå den rekursiva loopen.
+            2. Skriv en RecursiveEven(int n) metod som rekursivt beräknar det n:te jämna talet.
+            3. Implementera en rekursiv funktion för att beräkna tal i fibonaccisekvensen: (f(n) = f(n-1) + f(n-2))
+         */
+        bool isRunning = true;
+        do
+        {
+            Console.WriteLine("1. Recursive Even\n" +
+                              "2. Fibonacci\n" +
+                              "0. return to menu");
+            string input = Console.ReadLine();
+            switch (input)
+            {
+                case "1":
+                    int x = RecursiveEven(5);
+                    Console.WriteLine("Recursive Even: " + x);
+                    Console.ReadKey();
+                    break;
+                case "2":
+                    Fibonacci(5);
+                    break;
+                case "0":
+                    isRunning = false;
+                    break;
+                default:
+                    Console.WriteLine("wrong input");
+                    break;
+            }
+        } while (isRunning);
+    }
+
+    static int Fibonacci(int n)
+    {
+        if (n == 1)
+        {
+            return 1;
+        }
+        return Fibonacci(n - 1);
+    }
+
+    static int RecursiveEven(int n)
+    {
+        if (n == 0)
+        {
+            return 0;
+        }
+        return RecursiveEven(n - 1) + 2;
+    }
     /// <summary>
     /// Examines the datastructure List
     /// </summary>
@@ -350,6 +406,7 @@ class Program
         // ha gått jämnt ut på 0, då är det true och bara då.
         return BracketsFlag && charStack.Count == 0;
     }
+
 
 }
 
