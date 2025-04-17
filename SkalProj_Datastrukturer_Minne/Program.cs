@@ -313,15 +313,16 @@ class Program
     private static bool CheckParanthesisLogic(string input)
     {
         if (string.IsNullOrEmpty(input)) return false;
-
+        // skapa ett mönster med Dict
         var Pattern = new Dictionary<char, char>
-    {
-        { ')', '(' },
-        { '}', '{' },
-        { ']', '[' }
-    };
-
+        {
+            { ')', '(' },
+            { '}', '{' },
+            { ']', '[' }
+        };
+        // skapa en stack 
         var charStack = new Stack<char>();
+        // bool flagga
         bool BracketsFlag = false;
 
         //loopa igenom varje char från input 
